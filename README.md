@@ -53,9 +53,9 @@ You can run this in a terminal or directly inside a Jupyter notebook cell.
 
 - Install Python3
 - Open Jupyter Notebook (recommended)
-- Download main.ipynb inside Jupyter Notebook
+- Download the file main.py in your computer and then inside your Jupyter Notebook
 - Run the script from the command line in either of two ways:
-  - %run main.ipynb
+  - %run main.py
   - Open the file, click on the cell with the code, and do Shift + Enter to run the code
 
 
