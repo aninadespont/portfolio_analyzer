@@ -45,13 +45,17 @@ Notes:
 ## Usage
 
 Install Python3
+
 Open Jupyter Notebook (recommended)
+
 Download main.ipynb inside Jupyter Notebook
 
 Run the script from the command line:
 
 %run main.ipynb
+
 Or 
+
 Open the file, click on the cell with the code, and do Shift + Enter to run the code.
 
 The program is interactive and will guide you through the following steps:
@@ -87,22 +91,11 @@ o	1-year projected price and volatility band chart
 o	Forecast summary table (returns, price, volatility) 
 
 ## Example
-![alt text](image.png)
-![alt text](image-1.png)
-![alt text](image-2.png)
-![alt text](image-3.png)
-![alt text](image-4.png)
-![alt text](image-5.png)
-![alt text](image-6.png)
-![alt text](image-7.png)
-![alt text](image-8.png)
-![alt text](image-9.png)
-![alt text](image-10.png)
-![alt text](image-11.png)
 
 
 ## Project Context
 
 Python-based portfolio analysis tool developed as part of the course “Skills: Programming – Introduction Level” at the University of St. Gallen (Spring 2026). The project combines Python programming (functions, input validation, error handling, and loops) with applied financial analysis (risk, return, covariance, diversification, and time series forecasting).
-Anina Despont
+
+
 
