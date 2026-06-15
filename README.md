@@ -6,7 +6,7 @@ Python command-line tool for constructing and analyzing a user-defined stock por
 
 - **Custom Portfolio Construction:** the user defines the number of stocks, selects the tickers, attributes custom weights to each stock, and chooses a custom period. It also selects a benchmark index among the S&P 500, Nasdaq, and Dow Jones
 
--	**Stock-Level Metrics:** average annual return, best year, worst year, annual volatility, CAGR, and beta for each ticket
+-	**Stock-Level Metrics:** average annual return, best year, worst year, annual volatility, CAGR, and beta for each ticker
 
 -	**Correlation Heatmap:** visual representation of pairwise correlations between stocks to assess diversification
 
@@ -108,10 +108,33 @@ You can run this in a terminal or directly inside a Jupyter notebook cell.
 <img width="940" height="456" alt="image" src="https://github.com/user-attachments/assets/a59c5064-4270-4baa-8507-fe9ce81bc9e9" />
 <img width="940" height="128" alt="image" src="https://github.com/user-attachments/assets/5c940978-fd3c-47be-b1ae-7f8ddf790698" />
 
+## Methodology 
+The program downloads adjusted historical price data from Yahoo Finance through the yfinance library. 
+
+It computes daily returns as price percentage changes and annualized return as the mean of yearly compounded returns over the chosen period. 
+
+The Compound Annual Growth Rate (CAGR) uses the ratio between the final and initial values, adjusted for the total number of days between the two to return the annual growth over the period. 
+
+To compute stock betas, the covariance between the stocks' and the benchmark's daily returns aligned on common dates is used. It is then divided by the benchmark variance. 
+
+The Sharpe ratio represents the annualized returns minus the risk-free rate divided by the annualized volatility.
+
+For the expected market return in the CAPM model, the benchmark's average annual return is used as a proxy. The expected stock and portfolio returns as follows: E(Ri​)=Rf​+βi​(E(Rm​)−Rf​). 
+
+The alpha is the average actual yearly annual returns over the period minus the expected CAPM return.
+
+The security market line is derived by from the CAPM by plotting expected returns across a range of beta values. 
+
+Future prices and volatility are forecasted using a blended model combining:
+
+50% historical average returns
+50% exponential moving average returns with emphasis on the last 126  days
+
+Volatility projections are scaled over time using the square-root-of-time rule under the random-walk assumption.
 
 ## Project Context
 
-Python-based portfolio analysis tool developed as part of the course “Skills: Programming – Introduction Level” at the University of St. Gallen (Spring 2026). The project combines Python programming (functions, input validation, error handling, and loops) with applied financial analysis (risk, return, covariance, diversification, and time series forecasting).
+Python-based portfolio analysis tool developed as part of the course “Skills: Programming – Introduction Level” at the University of St. Gallen (Spring 2026). The project combines Python programming with applied financial analysis. 
 
 
 
