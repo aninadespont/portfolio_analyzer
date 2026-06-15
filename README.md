@@ -40,7 +40,7 @@ Python command-line tool for constructing and analyzing a user-defined stock por
 
 **Installation**:
 
-Install dependencies using: 
+Install libraries using: 
 - pip install yfinance pandas numpy matplotlib seaborn
 
 You can run this in a terminal or directly inside a Jupyter notebook cell.
@@ -87,13 +87,13 @@ You can run this in a terminal or directly inside a Jupyter notebook cell.
 **4.	Output:**
    
   Once the inputs are provided, the program automatically generates the following:
-- Stocks performance summary tables 
+- Stock performance summary tables 
 - Stocks correlation heatmap
 - Portfolio and benchmark performance summary tables
 -	Stock and portfolio CAPM analysis table
--	Security market line chart
--	1-year projected price and volatility band chart
--	Forecast summary table (returns, price, volatility) 
+-	Security market line chart plotted against the risk-free rate and the portfolio expected return
+-	1-year projected price and volatility band chart for the index and the portfolio
+-	Forecast summary table (returns, price, volatility) for both the benchmark and portfolio
 
 ## Example
 <img width="940" height="241" alt="image" src="https://github.com/user-attachments/assets/f1cb467d-73ce-4e06-82ac-ea4080c7c6d3" />
