@@ -36,10 +36,10 @@ def get_portfolio_size():
     while True:
         try:
             n = int(input("\nHow many stocks would you like to add to your portfolio?"))
-            if n > 0:
+            if n > 1:
                 return n
             else:
-                print("\nPlease enter a number greater than 0:")
+                print("\nPlease enter a number greater than 1:")
         except ValueError:
             print("\nInvalid input. Please enter a valid number.")
 
