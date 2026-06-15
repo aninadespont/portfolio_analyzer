@@ -53,10 +53,9 @@ You can run this in a terminal or directly inside a Jupyter notebook cell.
 
 - Install Python3
 - Open Jupyter Notebook (recommended)
-- Download the file main.py in your computer and then inside your Jupyter Notebook
-- Run the script from the command line in either of two ways:
+- Download the file main.py in your computer and then upload it to Jupyter Notebook
+- Run the following script in an empty cell in Jupyter Notebook:
   - %run main.py
-  - Open the file, click on the cell with the code, and do Shift + Enter to run the code
 
 
 **The program is interactive and will guide you through the following steps:**
