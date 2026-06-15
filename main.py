@@ -167,19 +167,19 @@ def get_benchmark_choice(period):
             
             if benchmark == 1:
                 benchmark_name = "S&P 500"
-                benchmark_price = yf.download("^GSPC", period = period, auto_adjust=True, progress=False)["Close"]
+                benchmark_price = yf.download("^GSPC", period=period, auto_adjust=True, progress=False)["Close"]
                 
                 return benchmark_name, benchmark_price
             
             elif benchmark == 2:
                 benchmark_name = "Nasdaq"
-                benchmark_price = yf.download("^IXIC", period = period, auto_adjust=True, progress=False)["Close"]
+                benchmark_price = yf.download("^IXIC", period=period, auto_adjust=True, progress=False)["Close"]
                
                 return benchmark_name, benchmark_price
             
             elif benchmark == 3:
                 benchmark_name = "Dow Jones"
-                benchmark_price = yf.download("^DJI", period = period, auto_adjust=True, progress=False)["Close"]
+                benchmark_price = yf.download("^DJI", period=period, auto_adjust=True, progress=False)["Close"]
                 
                 return benchmark_name, benchmark_price
             
@@ -203,7 +203,7 @@ def get_stock_metrics(portfolio, period, benchmark_price):
         weights.append(item["weight"])
 
     # Downloading adjusted closing prices for all tickers
-    prices = yf.download(tickers, period = period, auto_adjust=True, progress=False)["Close"]
+    prices = yf.download(tickers, period=period, auto_adjust=True, progress=False)["Close"]
 
     # Daily returns of stocks as percentage changes and removing NaN values (as the first row is always NaN because there is no previous price)
     daily_returns_stocks = prices.pct_change().dropna()
@@ -264,8 +264,8 @@ def get_corr_heatmap(daily_returns_stocks):
     corr_matrix = daily_returns_stocks.corr()
     
     fig, ax = plt.subplots(figsize=(10, 7))
-    sns.heatmap(corr_matrix, annot=True, cmap="coolwarm", fmt=".2f", square=True, vmin=-1, vmax=1, center=0, xticklabels=True, yticklabels=True)
-    plt.title("Portfolio Correlation Heatmap", fontsize=12)
+    sns.heatmap(corr_matrix, annot=True, cmap="coolwarm", fmt=".2f", square=True, vmin=-1, vmax=1, center=0, xticklabels=True, yticklabels=True, ax=ax)
+    ax.set_title("Portfolio Correlation Heatmap", fontsize=12)
     plt.tight_layout()
     plt.show()
     plt.close(fig)
@@ -286,32 +286,32 @@ def get_rfr_ticker(period):
         years = 5  
 
     # Assigning the corresponding yield to the period
-    # Downloading the corresponding data
+    # Downloading the corresponding data using a 5-day period, as only the last available risk-free rate is required for future calculations
     # Converting the last available risk-free rate into decimal form for future computations as yfinance returns the data in %
     
     # 3-month T-bill for short-term horizons
     if years <= 1:
-        raw_rfr = yf.download("^IRX", period=period, auto_adjust=True, progress=False)["Close"].squeeze()
+        raw_rfr = yf.download("^IRX", period="5d", auto_adjust=True, progress=False)["Close"].squeeze()
         risk_free_rate = float((raw_rfr.iloc[-1] / 100))
         
-        return raw_rfr, risk_free_rate
+        return risk_free_rate
         
     # 5-year Treasury yield for medium-term horizons
     elif years <= 7:
-        raw_rfr = yf.download("^FVX", period=period, auto_adjust=True, progress=False)["Close"].squeeze()
+        raw_rfr = yf.download("^FVX", period="5d", auto_adjust=True, progress=False)["Close"].squeeze()
         risk_free_rate = float((raw_rfr.iloc[-1] / 100))
 
-        return raw_rfr, risk_free_rate
+        return risk_free_rate
     
     # 10-year Treasury note for long-term horizons
     else:
-        raw_rfr = yf.download("^TNX", period=period, auto_adjust=True, progress=False)["Close"].squeeze()
+        raw_rfr = yf.download("^TNX", period="5d", auto_adjust=True, progress=False)["Close"].squeeze()
         risk_free_rate = float((raw_rfr.iloc[-1] / 100))
                                
-        return raw_rfr, risk_free_rate
+        return risk_free_rate
 
 # Calculation of different portfolio metrics
-def get_portfolio_metrics(portfolio, daily_returns_stocks, yearly_stock_returns, avg_annual_stock_return, annual_stock_volatility, beta_stocks, prices, period, raw_rfr, risk_free_rate, tickers, weights):
+def get_portfolio_metrics(daily_returns_stocks, yearly_stock_returns, beta_stocks, prices, period, risk_free_rate, tickers, weights):
  
     # Portfolio yearly returns as the weighted sum of individual stock returns per year 
     portfolio_yearly_returns = yearly_stock_returns @ weights
@@ -348,8 +348,8 @@ def get_portfolio_metrics(portfolio, daily_returns_stocks, yearly_stock_returns,
         for j in range(n):
             # Excluding self-correlation (always 1)
             if i != j:
-                pair_weight        = weights[i] * weights[j]
-                weighted_avg_corr  += pair_weight * correlation_matrix[i, j]
+                pair_weight = weights[i] * weights[j]
+                weighted_avg_corr += pair_weight * correlation_matrix[i, j]
                 total_weight_pairs += pair_weight
 
     diversification_score = 1 - (weighted_avg_corr / total_weight_pairs)
@@ -361,14 +361,14 @@ def get_portfolio_metrics(portfolio, daily_returns_stocks, yearly_stock_returns,
         "Expected return (%)": (avg_annual_return_portfolio * 100),
         "Best year (%)": (best_year_portfolio * 100),
         "Worst year (%)": (worst_year_portfolio * 100),
-        "Annual portfolio volatility (%)": (portfolio_volatility * 100),
+        "Annual volatility (%)": (portfolio_volatility * 100),
         "CAGR (%)": (portfolio_cagr * 100),
         "Portfolio beta": portfolio_beta,
         "Sharpe ratio": sharpe_ratio, 
         "Diversification score": diversification_score
     }])
 
-    return df_portfolio_metrics, risk_free_rate, avg_annual_return_portfolio, portfolio_beta, portfolio_prices
+    return df_portfolio_metrics, avg_annual_return_portfolio, portfolio_beta, portfolio_prices
 
 # Computing the same set of metrics for the benchmark as for the portfolio to compare them
 def get_benchmark_metrics(risk_free_rate, period, benchmark_price, benchmark_name):
@@ -398,7 +398,7 @@ def get_benchmark_metrics(risk_free_rate, period, benchmark_price, benchmark_nam
         "Ticker": benchmark_name,
         "Weight": None,                                        
         "Period": period,
-        "Expected benchmark return (%)": (benchmark_avg * 100),
+        "Expected return (%)": (benchmark_avg * 100),
         "Best year (%)": (benchmark_best * 100),
         "Worst year (%)": (benchmark_worst * 100),
         "Annual volatility (%)": (annual_benchmark_volatility * 100),
@@ -410,7 +410,7 @@ def get_benchmark_metrics(risk_free_rate, period, benchmark_price, benchmark_nam
     return benchmark_row, yearly_benchmark_returns, benchmark_avg
 
 # CAPM computation
-def get_capm(portfolio, daily_returns_stocks, yearly_stock_returns, avg_annual_stock_return, annual_stock_volatility, beta_stocks, risk_free_rate, benchmark_name, yearly_benchmark_returns, benchmark_avg, avg_annual_return_portfolio, portfolio_beta, weights, tickers):
+def get_capm(avg_annual_stock_return, beta_stocks, risk_free_rate, benchmark_avg, avg_annual_return_portfolio, portfolio_beta, tickers):
     
     #Stock CAPM calculation
     stock_capm_returns = []
@@ -487,7 +487,7 @@ def get_sml(benchmark_avg, beta_stocks, risk_free_rate, portfolio_beta, avg_annu
 # This combination captures recent market trends while filtering out short-term noise
 # Additionally, an uncertainty range is computed using the standard deviation 
 
-def get_ema_forecast(prices, portfolio, portfolio_prices, benchmark_price, benchmark_name, forecast_days=252):
+def get_ema_forecast(portfolio_prices, benchmark_price, benchmark_name, forecast_days=252):
 
     # Normalizing both portfolio and benchmark series to 100 for direct comparison on the same scale
     portfolio_normalized = portfolio_prices / portfolio_prices.iloc[0] * 100
@@ -633,8 +633,8 @@ benchmark_name, benchmark_price = get_benchmark_choice(period)
 # Computing stock, portfolio, and benchmark metrics
 df_stock_metrics, daily_returns_stocks, yearly_stock_returns, avg_annual_stock_return, annual_stock_volatility, beta_stocks, prices, tickers, weights = get_stock_metrics(portfolio, period, benchmark_price)
 
-raw_rfr, risk_free_rate =get_rfr_ticker(period)
-df_portfolio_metrics, risk_free_rate, avg_annual_return_portfolio, portfolio_beta, portfolio_prices = get_portfolio_metrics(portfolio, daily_returns_stocks, yearly_stock_returns, avg_annual_stock_return, annual_stock_volatility, beta_stocks, prices, period, raw_rfr, risk_free_rate, tickers, weights)
+risk_free_rate = get_rfr_ticker(period)
+df_portfolio_metrics, avg_annual_return_portfolio, portfolio_beta, portfolio_prices = get_portfolio_metrics(daily_returns_stocks, yearly_stock_returns, beta_stocks, prices, period, risk_free_rate, tickers, weights)
 
 benchmark_row, yearly_benchmark_returns, benchmark_avg = get_benchmark_metrics(risk_free_rate, period, benchmark_price, benchmark_name)
 
@@ -647,7 +647,7 @@ print("\n\nPortfolio Metrics Overview:\n", df_portfolio_metrics.round(3).to_stri
 print("\n\nBenchmark Metrics Overview:\n", benchmark_row.round(3).to_string(index = False))
 
 # Displaying CAPM tables and SML graph
-capm_stock_df, capm_portfolio_df, stock_capm_returns, stock_alphas, portfolio_capm_return, portfolio_alpha = get_capm(portfolio, daily_returns_stocks, yearly_stock_returns, avg_annual_stock_return, annual_stock_volatility, beta_stocks, risk_free_rate, benchmark_name, yearly_benchmark_returns, benchmark_avg, avg_annual_return_portfolio, portfolio_beta, weights, tickers)
+capm_stock_df, capm_portfolio_df, stock_capm_returns, stock_alphas, portfolio_capm_return, portfolio_alpha = get_capm(avg_annual_stock_return, beta_stocks, risk_free_rate, benchmark_avg, avg_annual_return_portfolio, portfolio_beta, tickers)
 
 print("\n\nIndividual Portfolio Stocks CAPM Results Overview:\n", capm_stock_df.round(3).to_string())
 print("\n\nPortfolio CAPM Results Overview:\n", capm_portfolio_df.round(3).to_string(index=False),"\n\n")
@@ -655,6 +655,6 @@ print("\n\nPortfolio CAPM Results Overview:\n", capm_portfolio_df.round(3).to_st
 get_sml(benchmark_avg, beta_stocks, risk_free_rate, portfolio_beta, avg_annual_return_portfolio, portfolio_alpha, benchmark_name)
 
 # Generation and representation of the 1-year blended forecast graph and summary table 
-df_forecast_summary = get_ema_forecast(prices, portfolio, portfolio_prices, benchmark_price, benchmark_name, forecast_days=252)
+df_forecast_summary = get_ema_forecast(portfolio_prices, benchmark_price, benchmark_name, forecast_days=252)
 
 print("\n1-Year Forecast Summary Table:\n", df_forecast_summary.round(3).to_string(index=False))
