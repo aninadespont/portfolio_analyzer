@@ -49,7 +49,8 @@ def get_portfolio_size():
 # If the ticker is not found in yfinance, this ticker either does not exist or it is misspelled
 def get_valid_ticker(existing_tickers):
     while True:
-        ticker = input("\nWhich stock would you like to add to your portfolio? Please enter the stock's ticker symbol.")
+        # Taking out spaces and putting every input in upper case to avoid errors stopping the program
+        ticker = input("\nWhich stock would you like to add to your portfolio? Please enter the stock's ticker symbol.").strip().upper()
 
         if ticker in existing_tickers:
             print(f"Error: {ticker} has already been added to the portfolio.")
