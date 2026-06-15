@@ -98,7 +98,7 @@ You can run this in a terminal or directly inside a Jupyter notebook cell.
 ## Example
 <img width="940" height="241" alt="image" src="https://github.com/user-attachments/assets/f1cb467d-73ce-4e06-82ac-ea4080c7c6d3" />
 <img width="940" height="225" alt="image" src="https://github.com/user-attachments/assets/2ccd5980-0669-412e-b13f-0499214e9ba0" />
-<img width="531" height="291" alt="image" src="https://github.com/user-attachments/assets/6ba8a5dd-f0d7-48dc-aa49-3ae308e2ce52" />
+<img width="940" height="350" alt="image" src="https://github.com/user-attachments/assets/9c388899-1b6d-448b-8d58-24b359700246" />
 <img width="940" height="92" alt="image" src="https://github.com/user-attachments/assets/8d348ab9-9ed1-45e3-a0ff-57eb066e0aa7" />
 <img width="940" height="729" alt="image" src="https://github.com/user-attachments/assets/7560f234-4676-411f-891f-35ace7e8cf9c" />
 <img width="940" height="89" alt="image" src="https://github.com/user-attachments/assets/9e7609bf-5e0c-4570-98e0-8f9fb3977871" />
