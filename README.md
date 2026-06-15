@@ -1,6 +1,6 @@
 # **Portfolio Analyzer**
 
-Python command-line tool for constructing and analyzing a user-defined stock portfolio. The program retrieves historical financial data from yfinance, which fetches publicly available data from Yahoo Finance. Based on this data, the program computes a comprehensive set of financial metrics for individual stocks, the portfolio as a whole, and a major index used as a benchmark for comparison. It also analyzes stocks’ and the portfolio’s CAPM to estimate expected returns and alpha. Finally, it projects 1-year future prices and returns for both the benchmark and the portfolio using blended forecasting model combining exponential moving averages and historical averages 50/50. It also forecasts the 1-year volatility for the benchmark and portfolio using exponential weighted moving average, as it is more appropriate to compute volatility. 
+Python command-line tool for constructing and analyzing a user-defined stock portfolio. The program retrieves historical financial data from yfinance, which fetches publicly available data from Yahoo Finance. Based on this data, the program computes a comprehensive set of financial metrics for individual stocks, the portfolio as a whole, and a major index used as a benchmark for comparison. It also analyzes stocks’ and the portfolio’s CAPM to estimate expected returns and alpha and plots the latter against the security market line. Finally, it projects 1-year future prices, returns, and volatility for both the benchmark and the portfolio using a blended forecasting model combining exponential moving averages and historical averages 50/50. 
 
 ## Features
 
@@ -18,7 +18,7 @@ Python command-line tool for constructing and analyzing a user-defined stock por
 
 -	**Security Market Line:** visual representation of the security market line, the risk-free rate, portfolio expected return according to the CAPM, and portfolio alpha
 
--	**1-Year Exponential Moving Average Forecast:** projected future returns and prices for the portfolio and the benchmark, using the combination of 50% historical average returns and 50% exponential moving averages with an emphasis on the last 63 trading days. The exponentially weighted moving average is used to forecast volatility with standard deviation range scaled with √t under a random-walk assumption. Outputs include a graph representing forecasted prices and uncertainty bands, as well as a summary table of projected returns and volatility. 
+-	**1-Year Exponential Moving Average Forecast:** projected future returns and prices for the portfolio and the benchmark, using the combination of 50% historical average returns and 50% exponential moving averages with an emphasis on the last 126 trading days. The same approach is used to forecast volatility with standard deviation range scaled with √t under a random-walk assumption. Outputs include a graph representing forecasted prices and uncertainty bands, as well as a summary table of projected returns and volatility over the period, as well as the forecasted end price. 
 
 ## Project Structure
 - Main script: main.py
