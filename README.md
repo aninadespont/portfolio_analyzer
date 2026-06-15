@@ -1,12 +1,12 @@
 # **Portfolio Analyzer**
 
-Python command-line tool for constructing and analyzing a user-defined stock portfolio. The program retrieves historical financial data from yfinance, which fetches publicly available data from Yahoo Finance. Based on this data, the program computes a comprehensive set of financial metrics for individual stocks, the portfolio as a whole, and a major index used as a benchmark for comparison. It also analyzes stocks’ and the portfolio’s CAPM to estimate expected returns and alpha and plots the latter against the security market line. Finally, it projects 1-year future prices, returns, and volatility for both the benchmark and the portfolio using a blended forecasting model combining exponential moving averages and historical averages 50/50. 
+Python command-line tool for constructing and analyzing a user-defined stock portfolio. The program retrieves historical financial data from yfinance, which fetches publicly available data from Yahoo Finance. Based on this data, the program computes a comprehensive set of financial metrics for individual stocks, the portfolio as a whole, and a major index used as a benchmark for comparison. It also analyzes stocks’ and the portfolio’s CAPM to estimate expected returns and alpha and plots the latter against the security market line. Finally, it projects 1-year future prices, returns, and volatility for both the benchmark and the portfolio using a 50/50 blended forecasting model combining exponential moving averages and historical averages. 
 
 ## Features
 
 - **Custom Portfolio Construction:** the user defines the number of stocks, selects the tickers, attributes custom weights to each stock, and chooses a custom period. It also selects a benchmark index among the S&P 500, Nasdaq, and Dow Jones
 
--	**Stock-Level Metrics:** average annual return, best year, worst year, annual volatility, CAGR, and beta for each ticker
+-	**Stock-Level Metrics:** average annual return, best year, worst year, annual volatility, CAGR, and beta for each ticker are calculated
 
 -	**Correlation Heatmap:** visual representation of pairwise correlations between stocks to assess diversification
 
@@ -16,9 +16,9 @@ Python command-line tool for constructing and analyzing a user-defined stock por
 
 -	**CAPM Analysis:** portfolio beta, CAPM return, actual return, and alpha for both individual stocks and the portfolio
 
--	**Security Market Line:** visual representation of the security market line, the risk-free rate, portfolio expected return according to the CAPM, and portfolio alpha
+-	**Security Market Line:** visual representation of the security market line, the risk-free rate, the portfolio's expected return according to the CAPM, and the portfolio alpha
 
--	**1-Year Exponential Moving Average Forecast:** projected future returns and prices for the portfolio and the benchmark, using the combination of 50% historical average returns and 50% exponential moving averages with an emphasis on the last 126 trading days. The same approach is used to forecast volatility with standard deviation range scaled with √t under a random-walk assumption. Outputs include a graph representing forecasted prices and uncertainty bands, as well as a summary table of projected returns and volatility over the period, as well as the forecasted end price. 
+-	**1-Year Exponential Moving Average Forecast:** projected future returns and prices for the portfolio and the benchmark, using the combination of 50% historical average returns and 50% exponential moving averages with an emphasis on the last 126 trading days. The same approach is used to forecast volatility and an uncertainty range using the standard deviation scaled with √t under a random walk assumption. Outputs include a graph representing forecasted prices and uncertainty bands, as well as a summary table of projected returns and volatility over the period, as well as the forecasted end price. 
 
 ## Project Structure
 - Main script: main.py
@@ -43,7 +43,7 @@ Python command-line tool for constructing and analyzing a user-defined stock por
 Install libraries using: 
 - pip install yfinance pandas numpy matplotlib seaborn
 
-You can run this in a terminal or directly inside a Jupyter notebook cell.
+You can run this in a terminal or directly inside a Jupyter Notebook cell.
 
 **Notes**: 
 -	Different library versions may affect function behaviors or supported parameters
@@ -72,7 +72,7 @@ You can run this in a terminal or directly inside a Jupyter notebook cell.
     - Which stock would you like to add to your portfolio? Please enter the stock's ticker symbol.
 
 -	Weight allocation:
-    - What weight do you wish to put on {ticker}? Enter either a percentage or a decimal:
+    - What weight would you like to assign to {ticker}? Enter either a percentage or a decimal:
 
 
 **3.	Analysis Settings:**
@@ -86,13 +86,13 @@ You can run this in a terminal or directly inside a Jupyter notebook cell.
 **4.	Output:**
    
   Once the inputs are provided, the program automatically generates the following:
-- Stock performance summary tables 
+- Stocks performance summary tables 
 - Stocks correlation heatmap
 - Portfolio and benchmark performance summary tables
 -	Stock and portfolio CAPM analysis table
 -	Security market line chart plotted against the risk-free rate and the portfolio expected return
 -	1-year projected price and volatility band chart for the index and the portfolio
--	Forecast summary table (returns, price, volatility) for both the benchmark and portfolio
+-	Forecast summary table (returns, price, and volatility) for both the benchmark and portfolio
 
 ## Example
 <img width="940" height="241" alt="image" src="https://github.com/user-attachments/assets/f1cb467d-73ce-4e06-82ac-ea4080c7c6d3" />
@@ -127,14 +127,14 @@ The security market line is derived by from the CAPM by plotting expected return
 
 Future prices and volatility are forecasted using a blended model combining:
 
-50% historical average returns
-50% exponential moving average returns with emphasis on the last 126  days
+- 50% historical average returns
+- 50% exponential moving average returns with emphasis on the last 126  days
 
 Volatility projections are scaled over time using the square-root-of-time rule under the random-walk assumption.
 
 ## Project Context
 
-Python-based portfolio analysis tool developed as part of the course “Skills: Programming – Introduction Level” at the University of St. Gallen (Spring 2026). The project combines Python programming with applied financial analysis. 
+Python portfolio analysis tool developed as part of the course “Skills: Programming – Introduction Level” at the University of St. Gallen (Spring 2026). The project combines Python programming with applied financial analysis. 
 
 
 
